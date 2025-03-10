@@ -15,7 +15,9 @@ const Navbar = () => {
                         ? <div className='flex items-center gap-3'>
                             <Link to={'/applications'}>Applied Jobs</Link>
                             <p>|</p>
-                            <p>Hi, Promise</p>
+                            <p className='max-sm:hidden'>Hi, Promise</p>
+                            {/* User profile picture */}
+                            <div className='border border-teal-600 rounded-full w-8 h-8 flex items-center justify-center bg-teal-50'>P</div>
                         </div>
                         :
                         <div className='flex gap-4 max-sm:text-sm'>
