@@ -9,7 +9,7 @@ const Navbar = () => {
     return (
         <div className='shadow py-4'>
             <div className='container px-4 2xl:px-20 mx-auto flex justify-between items-center'>
-                <img className='w-24' src={assets.logo} alt="" />
+                <img className='w-26' src={assets.logo} alt="" />
                 {
                     isLoggedIn
                         ? <div className='flex items-center gap-3'>
