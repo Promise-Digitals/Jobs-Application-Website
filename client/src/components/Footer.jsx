@@ -3,8 +3,7 @@ import { assets } from '../assets/assets'
 
 const Footer = () => {
     return (
-        <div className='container px-4 2xl:px-20 mx-auto flex items-center justify-between gap-4 py-3 mt-20'>
-            <img className='w-26' src={assets.logo} alt="" />
+        <div className='container px-4 2xl:px-20 mx-auto flex items-center justify-between border-t border-t-gray-300 gap-4 py-3 mt-20'>
             <p className='flex-1 pl-5 text-sm text-gray-500 max-sm:hidden '>Copyright @PromiseDigitals.dev | All right reserved.</p>
             <div className='flex gap-2.5'>
                 <img width={38} src={assets.facebook_icon} alt="" />
