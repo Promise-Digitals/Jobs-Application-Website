@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { assets } from '../assets/assets'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 const Navbar = () => {
+
+    const navigate = useNavigate()
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     return (
         <div className='shadow py-4'>
             <div className='container px-4 2xl:px-20 mx-auto flex justify-between items-center'>
-                <img className='w-26' src={assets.logo} alt="" />
+                <img onClick={() => navigate('/')} className='w-26 cursor-pointer' src={assets.logo} alt="" />
                 {
                     isLoggedIn
                         ? <div className='flex items-center gap-3'>
