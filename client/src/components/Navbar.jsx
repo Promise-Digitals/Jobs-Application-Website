@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets'
 import {Link, useNavigate} from 'react-router-dom'
+import { AppContext } from '../context/AppContext'
 
 const Navbar = () => {
 
     const navigate = useNavigate()
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    const{setShowRecruiterLogin} = useContext(AppContext)
 
     return (
         <div className='shadow py-4'>
@@ -23,7 +26,7 @@ const Navbar = () => {
                         </div>
                         :
                         <div className='flex gap-4 max-sm:text-sm'>
-                            <button className='text-gray-600'>Recruiter Login</button>
+                            <button onClick={e => setShowRecruiterLogin(true)} className='text-gray-600'>Recruiter Login</button>
                             <button onClick={() => setIsLoggedIn(true)} className='bg-teal-600 text-white px-6 sm:px-9 py-2 rounded-full'>Login</button>
                         </div>
                 }
