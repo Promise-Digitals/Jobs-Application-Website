@@ -8,7 +8,7 @@ const ViewApplications = () => {
                 <table className='w-full max-w-4xl bg-white border border-gray-200 max-sm:text-sm'>
                     <thead>
                         <tr className='border-b border-gray-200'>
-                            <th className='py-2 px-4 text-left'>#</th>
+                            <th className='py-2 px-4 text-left max-sm:hidden'>#</th>
                             <th className='py-2 px-4 text-left'>Username</th>
                             <th className='py-2 px-4 text-left max-sm:hidden'>Job Title</th>
                             <th className='py-2 px-4 text-left max-sm:hidden'>Location</th>
@@ -19,7 +19,7 @@ const ViewApplications = () => {
                     <tbody>
                         {viewApplicationsPageData.map((applicant, index) => (
                             <tr key={index} className='text-gray-700'>
-                                <td className='py-2 px-4 border-b border-gray-200 text-center'>{index + 1}</td>
+                                <td className='py-2 px-4 border-b border-gray-200 text-center max-sm:hidden'>{index + 1}</td>
                                 <td className='py-2 px-4 border-b border-gray-200 text-center flex'>
                                     <img className='w-10 h-10 rounded-full mr-3 max-sm:hidden' src={applicant.imgSrc} alt="" />
                                     <span>{applicant.name}</span>
