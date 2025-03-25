@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { jobsData } from "../assets/assets";
+import axios from 'axios'
 
 export const AppContext = createContext()
 
@@ -16,13 +17,40 @@ export const AppContextProvider = (props) => {
 
     const [showRecruiterLogin, setShowRecruiterLogin] = useState(false)
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    const [userData, setUserData] = useState(false)
+
+    const backendUrl = 'http://localhost:5000'
+
+
     // function to fetch job data
     const fetchJobs = async () => {
         setJobs(jobsData)
     }
 
+
+    const fetchAuthenticatedUser = async () => {
+        try {
+            const {data} = await axios.get(backendUrl + '/user', { withCredentials: true })
+            if (data.success) {
+                setUserData(data.userData)
+                setIsLoggedIn(true)
+            }
+        } catch (error) {
+            console.log(error)
+            setIsLoggedIn(false)
+        }
+    }
+
+
+
     useEffect(() => {
         fetchJobs()
+    }, [])
+
+    useEffect(() => {
+        fetchAuthenticatedUser()
     }, [])
 
 
@@ -30,7 +58,10 @@ export const AppContextProvider = (props) => {
         searchFilter, setSearchFilter,
         isSearched, setIsSearched,
         jobs, setJobs,
-        setShowRecruiterLogin, showRecruiterLogin
+        backendUrl,
+        setShowRecruiterLogin, showRecruiterLogin,
+        userData, setUserData,
+        isLoggedIn, setIsLoggedIn
     }
 
     return (<AppContext.Provider value={value}>
