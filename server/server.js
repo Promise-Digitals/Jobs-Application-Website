@@ -11,6 +11,7 @@ import ensureAuthenticated from "./middlewares/authUser.js";
 import "./controllers/UserAuth.js";
 import companyRoutes from "./routes/companyRoutes.js";
 import connectCloudinary from "./config/cloudinary.js";
+import jobRoutes from "./routes/jobRoutes.js"
 
 
 // Initialize Express
@@ -64,6 +65,7 @@ app.get('/user', ensureAuthenticated, (req, res) => {
 })
 
 app.use('/api/company', companyRoutes)
+app.use('/api/jobs', jobRoutes)
 
 // The error handler must be registered before any other error middleware and after all controllers
 Sentry.setupExpressErrorHandler(app);
