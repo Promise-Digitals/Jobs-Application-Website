@@ -9,13 +9,13 @@ const router = express.Router()
 router.get('/user', ensureAuthenticated, getUserData)
 
 // Apply for a job
-router.post('/apply', ApplyForJob)
+router.post('/apply', ensureAuthenticated, ApplyForJob)
 
 // Get applied jobs data
-router.get('/applications', getUserJobApplications)
+router.get('/applications', ensureAuthenticated, getUserJobApplications)
 
 // Update user profile (resume)
-router.post('/update-resume', upload.single('resume'), updateUserResume)
+router.post('/update-resume', ensureAuthenticated, upload.single('resume'), updateUserResume)
 
 
 export default router;
