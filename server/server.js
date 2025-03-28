@@ -12,7 +12,7 @@ import "./controllers/UserAuth.js";
 import companyRoutes from "./routes/companyRoutes.js";
 import connectCloudinary from "./config/cloudinary.js";
 import jobRoutes from "./routes/jobRoutes.js"
-
+import userRoutes from "./routes/userRoutes.js"
 
 // Initialize Express
 const app = express();
@@ -49,23 +49,24 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
     res.redirect('http://localhost:5173')
 })
 
-app.get('/user', ensureAuthenticated, (req, res) => {
+// app.get('/user', ensureAuthenticated, (req, res) => {
 
-    const userData = {
-        id: req.user._id,
-        name: req.user.name,
-        email: req.user.email,
-        image: req.user.image,
-        resume: req.user.resume
-    }
-    res.json({
-        success: true,
-        userData
-    }) 
-})
+//     const userData = {
+//         id: req.user._id,
+//         name: req.user.name,
+//         email: req.user.email,
+//         image: req.user.image,
+//         resume: req.user.resume
+//     }
+//     res.json({
+//         success: true,
+//         userData
+//     }) 
+// })
 
 app.use('/api/company', companyRoutes)
 app.use('/api/jobs', jobRoutes)
+app.use('/api/users', userRoutes)
 
 // The error handler must be registered before any other error middleware and after all controllers
 Sentry.setupExpressErrorHandler(app);
