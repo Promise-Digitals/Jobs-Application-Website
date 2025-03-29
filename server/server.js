@@ -49,20 +49,16 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
     res.redirect('http://localhost:5173')
 })
 
-// app.get('/user', ensureAuthenticated, (req, res) => {
+// Logout User
+app.get('/logout', (req, res) => {
+    req.logout((error) => {
+        if (error) {
+            return res.status(500).json({ error: 'Something went wrong' })
+        }
 
-//     const userData = {
-//         id: req.user._id,
-//         name: req.user.name,
-//         email: req.user.email,
-//         image: req.user.image,
-//         resume: req.user.resume
-//     }
-//     res.json({
-//         success: true,
-//         userData
-//     }) 
-// })
+        res.status(204).send()
+    })
+})
 
 app.use('/api/company', companyRoutes)
 app.use('/api/jobs', jobRoutes)

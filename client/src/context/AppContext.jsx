@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { jobsData } from "../assets/assets";
 import axios from 'axios'
+import { toast } from "react-toastify";
 
 export const AppContext = createContext()
 
@@ -21,12 +22,35 @@ export const AppContextProvider = (props) => {
 
     const [userData, setUserData] = useState(false)
 
-    const backendUrl = 'http://localhost:5000'
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
+    const [companyToken, setCompanyToken] = useState(null)
+
+    const [companyData, setCompanyData] = useState(null)
 
 
     // function to fetch job data
     const fetchJobs = async () => {
         setJobs(jobsData)
+    }
+
+
+    // Function to fetch company data
+    const fetchCompanyData = async () => {
+        try {
+
+            const {data} = await axios.get(backendUrl + "/api/company/company", {headers: {token: companyToken}})
+
+            if (data.success) {
+                setCompanyData(data.company)
+                console.log(data.company)
+            }else{
+                toast.error(data.message)
+            }
+            
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
 
 
@@ -47,12 +71,22 @@ export const AppContextProvider = (props) => {
 
     useEffect(() => {
         fetchJobs()
+
+        const storedCompanyToken = localStorage.getItem('companyToken')
+        if (storedCompanyToken) {
+            setCompanyToken(storedCompanyToken)
+        }
     }, [])
 
     useEffect(() => {
         fetchAuthenticatedUser()
     }, [])
 
+    useEffect(() => {
+        if (companyToken) {
+            fetchCompanyData()
+        }
+    }, [companyToken])
 
     const value = {
         searchFilter, setSearchFilter,
@@ -61,7 +95,9 @@ export const AppContextProvider = (props) => {
         backendUrl,
         setShowRecruiterLogin, showRecruiterLogin,
         userData, setUserData,
-        isLoggedIn, setIsLoggedIn
+        isLoggedIn, setIsLoggedIn,
+        companyToken, setCompanyToken,
+        companyData, setCompanyData
     }
 
     return (<AppContext.Provider value={value}>

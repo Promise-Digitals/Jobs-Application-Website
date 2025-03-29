@@ -68,7 +68,7 @@ export const loginCompany = async (req, res) => {
         
         const company = await Company.findOne({email})
 
-        if (bcrypt.compare(password, company.password)) {
+        if (await bcrypt.compare(password, company.password)) {
             
             res.json({
                 success: true,
@@ -140,7 +140,7 @@ export const postJob = async (req, res) => {
 
         res.json({
             success: true,
-            newJob
+            message: "Job Added Successfully"
         })
 
     } catch (error) {

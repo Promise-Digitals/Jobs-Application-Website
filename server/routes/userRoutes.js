@@ -18,4 +18,5 @@ router.get('/applications', ensureAuthenticated, getUserJobApplications)
 router.post('/update-resume', ensureAuthenticated, upload.single('resume'), updateUserResume)
 
 
+
 export default router;
