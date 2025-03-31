@@ -1,6 +1,7 @@
 import passport from "passport"
 import GoogleStrategy from 'passport-google-oauth20';
 import User from "../models/User.js";
+import generateToken from "../Utils/generateToken.js";
 
 
 passport.use(new GoogleStrategy({
@@ -12,7 +13,9 @@ passport.use(new GoogleStrategy({
         const user = await User.findOne({ _id: profile.id })
 
         if (user) {
+            token: generateToken(user._id)
             return done(null, user)
+            
         }
 
         const newUser = await User.create({

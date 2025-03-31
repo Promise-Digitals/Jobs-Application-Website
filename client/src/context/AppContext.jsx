@@ -28,6 +28,8 @@ export const AppContextProvider = (props) => {
 
     const [companyData, setCompanyData] = useState(null)
 
+    const [userApplications, setUserApplications] = useState(null)
+
 
     // function to fetch job data
     const fetchJobs = async () => {
@@ -41,7 +43,7 @@ export const AppContextProvider = (props) => {
             }else{
                 toast.error(data.message)
             }
-            
+
         } catch (error) {
             toast.error(error.message)
         }
@@ -80,6 +82,25 @@ export const AppContextProvider = (props) => {
     }
 
 
+    // Function to fetch user's applications data
+    const fetchUserApplications = async () => {
+        try {
+
+            const {data} = await axios.get(backendUrl + "/api/users/applications", {userId: userData.id})
+
+            if (data.success) {
+                setUserApplications(data.applications)
+                console.log(data.applications)
+            }else{
+                toast.error(data.message)
+            }
+            
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+
 
     useEffect(() => {
         fetchJobs()
@@ -92,6 +113,7 @@ export const AppContextProvider = (props) => {
 
     useEffect(() => {
         fetchAuthenticatedUser()
+        fetchUserApplications()
     }, [])
 
     useEffect(() => {
@@ -109,7 +131,10 @@ export const AppContextProvider = (props) => {
         userData, setUserData,
         isLoggedIn, setIsLoggedIn,
         companyToken, setCompanyToken,
-        companyData, setCompanyData
+        companyData, setCompanyData,
+        userApplications, setUserApplications,
+        fetchAuthenticatedUser,
+        fetchUserApplications
     }
 
     return (<AppContext.Provider value={value}>

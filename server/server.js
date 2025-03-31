@@ -6,7 +6,6 @@ import "dotenv/config";
 import connectDB from "./config/db.js";
 import * as Sentry from "@sentry/node";
 import passport from "passport";
-import ensureAuthenticated from "./middlewares/authUser.js";
 
 import "./controllers/UserAuth.js";
 import companyRoutes from "./routes/companyRoutes.js";
@@ -29,8 +28,8 @@ app.use(cors({
 }))
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true,
 }))
 
 app.use(passport.initialize())

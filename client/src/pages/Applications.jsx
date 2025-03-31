@@ -1,13 +1,52 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import { assets, jobsApplied } from '../assets/assets'
 import moment from 'moment'
 import Footer from '../components/Footer'
+import { useContext } from 'react'
+import { AppContext } from '../context/AppContext'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const Applications = () => {
 
     const [isEdit, setIsEdit] = useState(false)
     const [resume, setResume] = useState(null)
+
+    const {backendUrl, userData, userApplications, fetchAuthenticatedUser, fetchUserApplications} = useContext(AppContext)
+
+    const updateResume = async () => {
+        try {
+            const userId = userData.id
+
+            const formData = new FormData()
+
+            formData.append('resume', resume)
+            formData.append('userId', userId)
+
+            const {data} = await axios.post(backendUrl + "/api/users/update-resume", formData)
+
+            if (data.success) {
+                toast.success(data.message)
+                await fetchAuthenticatedUser()
+            }else{
+                toast.error(data.message)
+            }
+            
+        } catch (error) {
+            toast.error(error.message)
+        }
+
+        setIsEdit(false)
+        setResume(null)
+    }
+
+
+    useEffect(() => {
+        if (userData) {
+            fetchUserApplications()
+        }
+    }, [userData])
 
     return (
         <>
@@ -17,17 +56,17 @@ const Applications = () => {
             <h2 className='text-xl font-semibold'>Your Resume</h2>
             <div className='flex gap-2 mb-6 mt-3'>
                 {
-                    isEdit
+                    isEdit || userData && userData.resume === ""
                     ? <>
                         <label className='flex items-center' htmlFor="resumeUpload">
-                            <p className='bg-teal-100 text-teal-800 px-4 py-2 rounded-lg mr-2'>Select Resume</p>
+                            <p className='bg-teal-100 text-teal-800 px-4 py-2 rounded-lg mr-2'>{resume ? resume.name : "Select resume"}</p>
                             <input id='resumeUpload' onChange={e => setResume(e.target.files[0])} accept='application/pdf' type="file" hidden />
                             <img src={assets.profile_upload_icon} alt="" />
                         </label>
-                        <button onClick={e => setIsEdit(false)} className='bg-teal-100 border border-teal-400 rounded-lg py-2 px-4 text-black'>Save</button>
+                        <button onClick={updateResume} className='bg-teal-100 border border-teal-400 rounded-lg py-2 px-4 text-black'>Save</button>
                     </>
                     : <div className='flex gap-2'>
-                        <a href="" className='bg-teal-100 text-teal-800 px-4 py-2 rounded-lg'>Resume</a>
+                        <a href={userData.resume} target='_blank' className='bg-teal-100 text-teal-800 px-4 py-2 rounded-lg'>Resume</a>
                         <button onClick={() => setIsEdit(true)} className='text-gray-600 border border-gray-300 rounded-lg px-4 py-2'>Edit</button>
                     </div>
                 }
@@ -44,17 +83,17 @@ const Applications = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {jobsApplied.map((job, index) => true ? (
-                        <tr className='border-b border-gray-500'>
+                    {userApplications.map((job, index) => true ? (
+                        <tr key={index} className='border-b border-gray-500'>
                             <td className='py-3 px-4 flex items-center gap-2 '>
-                                <img className='w-8 h-8' src={job.logo} alt="" />
-                                {job.company}
+                                <img className='w-8 h-8' src={job.companyId.image} alt="" />
+                                {job.companyId.name}
                             </td>
                             <td className='py-2 px-4'>
-                                {job.title}
+                                {job.jobId.title}
                             </td>
                             <td className='py-2 px-4'>
-                                {job.location}
+                                {job.jobId.location}
                             </td>
                             <td className='py-2 px-4'>{moment(job.date).format('ll')}</td>
                             <td className='py-2 px-4'>
