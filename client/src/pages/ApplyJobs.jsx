@@ -27,11 +27,10 @@ const ApplyJobs = () => {
     const fetchJob = async () => {
         try {
 
-            const { data } = await axios.get(backendUrl + `/api/jobs/${id}`)
+            const { data } = await axios.get(backendUrl + `/api/jobs/${id}`, {withCredentials: true})
 
             if (data.success) {
                 setJobData(data.job)
-                console.log(data.job)
             } else {
                 toast.error(data.message)
             }
@@ -54,7 +53,7 @@ const ApplyJobs = () => {
                 return toast.error("Upload resume to apply")
             }
 
-            const {data} = await axios.post(backendUrl + "/api/users/apply", {jobId: jobData._id, userId: userData.id})
+            const {data} = await axios.post(backendUrl + "/api/users/apply", {jobId: jobData._id}, { withCredentials: true })
 
             if (data.success) {
                 toast.success(data.message)

@@ -30,7 +30,8 @@ export const getUserData = (req, res) => {
 // Apply for a job
 export const ApplyForJob = async (req, res) => {
 
-    const {jobId, userId} = req.body;
+    const {jobId} = req.body;
+    const userId = req.user._id
 
     try {
 
@@ -78,9 +79,10 @@ export const getUserJobApplications = async (req, res) => {
 
     try {
         
-        const {userId} = req.body
+        const userId = req.user._id
 
-        const applications = await JobApplication.find(userId)
+
+        const applications = await JobApplication.find({userId: userId})
         .populate('companyId', 'name email image')
         .populate('jobId', 'title description location category level salary')
         .exec()
@@ -109,7 +111,7 @@ export const getUserJobApplications = async (req, res) => {
 // Get user profile (resume)
 export const updateUserResume = async (req, res) => {
     try {
-        const {userId} = req.body
+        const userId = req.user._id
         
         const resumeFile = req.file
 

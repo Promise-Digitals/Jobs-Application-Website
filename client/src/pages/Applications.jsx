@@ -17,14 +17,13 @@ const Applications = () => {
 
     const updateResume = async () => {
         try {
-            const userId = userData.id
 
             const formData = new FormData()
 
             formData.append('resume', resume)
-            formData.append('userId', userId)
+            // formData.append('userId', userId)
 
-            const {data} = await axios.post(backendUrl + "/api/users/update-resume", formData)
+            const {data} = await axios.post(backendUrl + "/api/users/update-resume", formData, {withCredentials: true})
 
             if (data.success) {
                 toast.success(data.message)

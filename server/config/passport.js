@@ -1,7 +1,9 @@
-import passport from "passport"
-import GoogleStrategy from 'passport-google-oauth20';
+import passport from 'passport'
+// creating require in ES6 module
+import {createRequire} from "module"
+const require = createRequire(import.meta.url)
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 import User from "../models/User.js";
-import generateToken from "../Utils/generateToken.js";
 
 
 passport.use(new GoogleStrategy({
@@ -10,21 +12,20 @@ passport.use(new GoogleStrategy({
     callbackURL: '/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        const user = await User.findOne({ _id: profile.id })
+        const user = await User.findOne({ email: profile.emails[0].value})
 
         if (user) {
-            token: generateToken(user._id)
             return done(null, user)
-            
         }
 
         const newUser = await User.create({
-            _id: profile.id,
             name: profile.displayName,
             email: profile.emails[0].value,
             resume: '',
             image: profile.photos[0].value
         })  
+
+        await newUser.save()
 
         done(null, newUser)
 
@@ -34,19 +35,19 @@ passport.use(new GoogleStrategy({
 }))
 
 
-passport.serializeUser((newUser, done) => {
-    done(null, newUser._id)
+passport.serializeUser((user, done) => {
+    done(null, user._id)
 })
 
 passport.deserializeUser(async (userId, done) => {
     try {
-        const user = await User.findById(userId)
+        const user = await User.findOne({ _id: userId })
 
         if (!user) {
             return done(new Error('User not found'))
         }
-        done(null, user)
 
+        done(null, user)
     } catch (error) {
         done(error)
     }

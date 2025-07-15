@@ -84,19 +84,20 @@ export const AppContextProvider = (props) => {
 
     // Function to fetch user's applications data
     const fetchUserApplications = async () => {
+        
         try {
 
-            const {data} = await axios.get(backendUrl + "/api/users/applications", {userId: userData.id})
+            const {data} = await axios.get(backendUrl + "/api/users/applications", { withCredentials: true })
 
             if (data.success) {
                 setUserApplications(data.applications)
-                console.log(data.applications)
             }else{
                 toast.error(data.message)
             }
             
         } catch (error) {
-            toast.error(error.message)
+            // toast.error(error.message)
+            console.log(error)
         }
     }
 

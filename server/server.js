@@ -7,7 +7,7 @@ import connectDB from "./config/db.js";
 import * as Sentry from "@sentry/node";
 import passport from "passport";
 
-import "./controllers/UserAuth.js";
+import "./config/passport.js";
 import companyRoutes from "./routes/companyRoutes.js";
 import connectCloudinary from "./config/cloudinary.js";
 import jobRoutes from "./routes/jobRoutes.js"
@@ -68,7 +68,7 @@ Sentry.setupExpressErrorHandler(app);
 
 
 // Port
-const PORT = process.env.PORt || 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT} `);
