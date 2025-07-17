@@ -9,7 +9,7 @@ import User from "../models/User.js";
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'https://jobs-application-server.vercel.app/auth/google/callback'
+    callbackURL: process.env.BACKEND_URI + '/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         const user = await User.findOne({ email: profile.emails[0].value})
