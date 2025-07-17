@@ -14,7 +14,7 @@ const Navbar = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.get('http://localhost:5000/logout', { withCredentials: true })
+            await axios.get('https://jobs-application-server.vercel.app/logout', { withCredentials: true })
             navigate('/')
             setIsLoggedIn(false)
             toast.success("You're successfully logged out")
@@ -47,7 +47,7 @@ const Navbar = () => {
                             :
                             <div className='flex gap-4 max-sm:text-sm'>
                                 <button onClick={e => setShowRecruiterLogin(true)} className='text-gray-600'>Recruiter Login</button>
-                                <a href='http://localhost:5000/auth/google' className='bg-teal-600 text-white px-6 sm:px-9 py-2 rounded-full'>Login</a>
+                                <a href='https://jobs-application-server.vercel.app/auth/google' className='bg-teal-600 text-white px-6 sm:px-9 py-2 rounded-full'>Login</a>
                             </div>
                     }
                 </div>

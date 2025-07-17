@@ -42,10 +42,10 @@ app.get("/", (req, res) => {
 
 
 // Google Authentication
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
+app.get('https://jobs-application-server.vercel.app/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: false }), (req, res) => {
-    res.redirect('http://localhost:5173')
+app.get('https://jobs-application-server.vercel.app/auth/google/callback', passport.authenticate('google', { failureRedirect: false }), (req, res) => {
+    res.redirect('https://jobs-application-portal.vercel.app')
 })
 
 // Logout User
