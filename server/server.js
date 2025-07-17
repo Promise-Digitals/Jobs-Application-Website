@@ -44,11 +44,10 @@ app.get("/", (req, res) => {
 // Google Authentication
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/failure' }), (req, res) => {
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: false }), (req, res) => {
     res.redirect('https://jobs-application-portal.vercel.app')
 })
 
-app.get('/failure', (req, res) => res.send("Failed"))
 
 // Logout User
 app.get('/logout', (req, res) => {
