@@ -1,10 +1,8 @@
-import "./config/instrument.js";
 import express from "express";
 import session from 'express-session'
 import cors from "cors";
 import "dotenv/config";
 import connectDB from "./config/db.js";
-import * as Sentry from "@sentry/node";
 import passport from "passport";
 
 import "./config/passport.js";
@@ -63,8 +61,6 @@ app.use('/api/company', companyRoutes)
 app.use('/api/jobs', jobRoutes)
 app.use('/api/users', userRoutes)
 
-// The error handler must be registered before any other error middleware and after all controllers
-Sentry.setupExpressErrorHandler(app);
 
 
 // Port
