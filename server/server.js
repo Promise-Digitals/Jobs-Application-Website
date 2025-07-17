@@ -18,11 +18,13 @@ const app = express();
 await connectDB();
 await connectCloudinary()
 
+const allowedOrigins = ["https://jobs-application-portal.vercel.app", "http://localhost:5173"]
+
 // Middlewares
 app.use(express.json());
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:5173'
+    origin: allowedOrigins
 }))
 app.use(session({
     secret: process.env.SESSION_SECRET,
