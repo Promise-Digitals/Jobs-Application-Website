@@ -82,7 +82,7 @@ const ApplyJobs = () => {
 
 
     useEffect(() => {
-        if (userApplications.length > 0 && jobData) {
+        if (userApplications?.length > 0 && jobData) {
             checkAlreadyApplied()
         }
     }, [jobData, userApplications, id])
@@ -138,7 +138,7 @@ const ApplyJobs = () => {
                             <h2>More jobs from {jobData.companyId.name}</h2>
                             {jobs.filter(job => job._id !== jobData._id && job.companyId._id === jobData.companyId._id).filter(job => {
                                 // set of applied jobsIds
-                                const appliedJobsIds = new Set(userApplications.map(app => app.jobId && app.jobId._id))
+                                const appliedJobsIds = new Set(userApplications?.map(app => app.jobId && app.jobId._id))
                                 // return true if user has not applied for this job
                                 return !appliedJobsIds.has(job._id)
                             }).slice(0, 4)

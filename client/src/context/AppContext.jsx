@@ -83,12 +83,9 @@ export const AppContextProvider = (props) => {
 
 
     // Function to fetch user's applications data
-    const fetchUserApplications = async () => {
-        
+    const fetchUserApplications = async () => {    
         try {
-
             const {data} = await axios.get(backendUrl + "/api/users/applications", { withCredentials: true })
-
             if (data.success) {
                 setUserApplications(data.applications)
             }else{
