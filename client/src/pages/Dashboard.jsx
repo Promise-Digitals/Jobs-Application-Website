@@ -32,7 +32,7 @@ const Dashboard = () => {
             {/* Navbar for Recruiter Panel */}
             <div className='shadow py-4'>
                 <div className='px-5 flex justify-between items-center'>
-                    <img onClick={e => navigate('/')} className='w-26 cursor-pointer' src={assets.logo} alt="" />
+                    <img onClick={e => navigate('/')} className='w-24 cursor-pointer' src={assets.logo} alt="" />
                     {companyData && (
                         <div className='flex items-center gap-3'>
                         <p className='max-sm:hidden'>Welcome, {companyData.name}</p>
